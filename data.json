@@ -1,0 +1,27 @@
+{
+    "car_numbers": [
+        {
+            "number": "125",
+            "price": 100.0,
+            "status": "Available"
+        },
+        {
+            "number": "AAA111",
+            "price": 100.0,
+            "status": "Available"
+        }
+    ],
+    "users": [
+        {
+            "username": "Aziz",
+            "address": "aaaaaaa",
+            "purchased_numbers": []
+        },
+        {
+            "username": "asd",
+            "address": "sdsda",
+            "purchased_numbers": []
+        }
+    ],
+    "sales": []
+}
