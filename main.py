@@ -96,32 +96,32 @@ def main():
     car_numbers, users, sales = load_data()
 
     while True:
-        print("\nAvtomobil raqamlari savdo tizimiga xush kelibsiz!")
+        print("\nWelcome to the Car Number Trading System!")
         choice = input("""
-1. Admin sifatida tizimga kirish
-2. Foydalanuvchi sifatida tizimga kirish
-3. Chiqish
-Kerakli bo'limni tanlang: """)
+1. Login as Admin
+2. Login as User
+3. Exit
+Select an option: """)
 
         if choice == "1":
-            admin_username = input("Admin login: ")
-            admin_password = input("Admin parol: ")
+            admin_username = input("Admin username: ")
+            admin_password = input("Admin password: ")
             if admin_username == "admin" and admin_password == "admin123":
-                print("Admin sifatida tizimga muvaffaqiyatli kirdingiz.")
+                print("Successfully logged in as Admin.")
                 while True:
                     admin_choice = input("""
-1. Yangi avtomobil raqami qo'shish
-2. Avtomobil raqamlarini ko'rish
-3. Sotuvlar tarixini ko'rish
-4. Chiqish
-Kerakli bo'limni tanlang: """)
+1. Add a new car number
+2. View car numbers
+3. View sales history
+4. Exit
+Select an option: """)
 
                     if admin_choice == "1":
-                        number = input("Avtomobil raqamini kiriting: ")
-                        price = float(input("Narxni kiriting: "))
+                        number = input("Enter the car number: ")
+                        price = float(input("Enter the price: "))
                         new_number = CarNumber(number, price)
                         car_numbers.append(new_number)
-                        print(f"Avtomobil raqami {number} qo'shildi.")
+                        print(f"Car number {number} has been added.")
                         save_data(car_numbers, users, sales)
                     elif admin_choice == "2":
                         for number in car_numbers:
@@ -132,71 +132,71 @@ Kerakli bo'limni tanlang: """)
                     elif admin_choice == "4":
                         break
                     else:
-                        print("Noto'g'ri tanlov!")
+                        print("Invalid choice!")
             else:
-                print("Login yoki parol noto'g'ri.")
+                print("Incorrect username or password.")
 
         elif choice == "2":
             user_action = input("""
-1. Username orqali tizimga kirish
-2. Yangi foydalanuvchi yaratish
-Kerakli bo'limni tanlang: """)
+1. Login with username
+2. Create a new user
+Select an option: """)
 
             user = None
             if user_action == "1":
-                username = input("Username-ni kiriting: ")
+                username = input("Enter your username: ")
                 user = next((u for u in users if u.username == username), None)
                 if user:
-                    print(f"Xush kelibsiz, {user.username}!")
+                    print(f"Welcome back, {user.username}!")
                 else:
-                    print("Foydalanuvchi topilmadi.")
+                    print("User not found.")
             elif user_action == "2":
-                username = input("Yangi username kiriting: ")
-                address = input("Manzilingizni kiriting: ")
+                username = input("Enter a new username: ")
+                address = input("Enter your address: ")
                 user = User(username, address)
                 users.append(user)
-                print(f"Yangi foydalanuvchi yaratildi: {user.username}")
+                print(f"New user created: {user.username}")
                 save_data(car_numbers, users, sales)
             else:
-                print("Noto'g'ri tanlov!")
+                print("Invalid choice!")
 
             if user:
                 while True:
                     user_choice = input("""
-1. Avtomobil raqamlarini ko'rish
-2. Avtomobil raqamini sotib olish
-3. Sotib olingan raqamlarni ko'rish
-4. Chiqish
-Kerakli bo'limni tanlang: """)
+1. View car numbers
+2. Purchase a car number
+3. View purchased car numbers
+4. Exit
+Select an option: """)
 
                     if user_choice == "1":
                         for number in car_numbers:
                             print(number)
                     elif user_choice == "2":
-                        number_id = input("Sotib olish uchun avtomobil raqamini kiriting: ")
+                        number_id = input("Enter the car number to purchase: ")
                         number = next((n for n in car_numbers if n.number == number_id and n.status == "Available"),
                                       None)
                         if number:
-                            print(f"Avtomobil raqami {number.number} sotib olindi!")
+                            print(f"Car number {number.number} has been purchased!")
                             number.status = "Sold"
                             user.purchased_numbers.append(number)
                             sales.append(Sale(number, user, "2025-01-09"))
                             save_data(car_numbers, users, sales)
                         else:
-                            print("Avtomobil raqami mavjud emas.")
+                            print("Car number is not available.")
                     elif user_choice == "3":
                         for number in user.purchased_numbers:
                             print(number)
                     elif user_choice == "4":
                         break
                     else:
-                        print("Noto'g'ri tanlov!")
+                        print("Invalid choice!")
 
         elif choice == "3":
-            print("Tizimdan chiqildi.")
+            print("Exiting the system.")
             break
         else:
-            print("Noto'g'ri tanlov!")
+            print("Invalid choice!")
 
 if __name__ == "__main__":
     main()
